@@ -1,14 +1,20 @@
 package Bmethods;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        Main m = new Main();
-        m.add(1, 2, 10);
-    }
+        
+        // printf .format
+        System.out.printf("integer: %d%nString: %s%nFloat: %.2f", 10, "hello", 10.5);
 
-    public void add(int a, int b){System.out.println(a + b);}
-    public void add(int a, int b, int c){System.out.println(a + b);}
-    public void add(int c, int b, double a){System.out.println(a + b);}
+        String name = "chris";
+        int age = 10;
+        double x = 10.5;
+
+        String l = String.format("%s%n%d%n%.2f", name, age, x);
+        System.out.println(l);
+    }
 }
 
 
@@ -52,9 +58,50 @@ public class Main {
  *              - types of
  *              - number of    
  * 
+ *  eg:
  * 
+ * Main m = new Main();
+        m.add(1, 2, 10);
+    }
+
+    public void add(int a, int b){System.out.println(a + b);}
+    public void add(int a, int b, int c){System.out.println(a + b);}
+    public void add(int c, int b, double a){System.out.println(a + b);}
+}
  * 
+ * inputs:
  * 
+ * Scanner scanner = new Scanner(System.in);
+
+        System.out.println("enter your name: ");
+        String name = scanner.nextLine(); // reading entire line of input (string)
+
+        System.out.println("enter your age: ");
+        int age = scanner.nextInt(); 
+       
+        System.out.println("enter a double: ");
+        double d = scanner.nextDouble();
+
+        scanner.nextLine();
+
+        System.out.println("enter a string: ");
+        String n = scanner.nextLine();
+
+        System.out.println("hello " + name + " age is " + age + " double is " + d + " string is " + n);
+
+        scanner.close();
+
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("enter age: ");
+        int age = Integer.parseInt(scanner.nextLine().trim());
+
+        System.out.println("enter a string: ");
+        String n = scanner.nextLine();
+
+        System.out.println("age is " + age + " string is " + n);
+        scanner.close();
  * 
  * 
  */
