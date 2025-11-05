@@ -73,6 +73,7 @@ public class Main {
             switch (grade){
             case "a" ,"b", "c" -> System.out.println("passed");
             case "d" ,"f" -> System.out.println("failed");
+            default -> System.out.println("n/a");
             }
     }
 
