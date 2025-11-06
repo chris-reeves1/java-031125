@@ -3,7 +3,21 @@ package FTypes;
 public class Main {
     public static void main(String[] args) {
         
-        Person person = Person.createChild("chris");
+        // access the static through the class
+        System.out.println(Counter.count); // output 0
+
+        new Counter();
+        new Counter();
+
+        System.out.println(Counter.count); // output 2
+
+        Counter c = new Counter();
+        System.out.println(c.count); // output 3
+
+
+
+
+        //Person person = Person.createChild("chris");
         
         // Person person1 = new Person();
         // person1.introduce();
@@ -15,6 +29,15 @@ public class Main {
          
     
     }
+}
+
+class Counter{
+    public static int count = 0;
+
+
+public Counter(){
+    count++;}
+
 }
 
 
@@ -392,4 +415,47 @@ class Person{
     - more complex
     - overhead
     - more to debug. 
+
+
+Static fields
+-------------
+
+- A variable declared with the static keyword - still shared amoungst all instances.
+
+class Counter{
+    public static int count = 0;
+}
+
+public Counter(){
+    count++}
+
+-- state shared across all instances, the field must be kept constant.
+-- Access through the class name. (recommended approach)
+-- However an instance can still be used -- discouraged.  
+
+// access the static through the class
+        System.out.println(Counter.count); // output 0
+
+        new Counter();
+        new Counter();
+
+        System.out.println(Counter.count); // output 2
+
+        Counter c = new Counter();
+        System.out.println(c.count); // output 3
+
+-- Memory: stack with method pointers.
+-- initialisation: statics are initilaised when a class is loaded -- before
+    objects get created.
+-- Shared state -- all instances share the value.
+
+
+-- static finals:
+-- Ensuring immutability. 
+
+public static final double PI = 3.14
+
+
+
+
 */
