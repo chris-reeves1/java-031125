@@ -1,0 +1,85 @@
+Containers intro:
+
+- A container is a process. 
+
+- it's like a virtual machine - os/ephemeral/install+config like a vm. 
+
+- description:
+    - self-contained apps/dependancies
+    - independence from OS?????? sudo always has visabilty and control. 
+    - isolation - processes/
+    - works on any env/os
+    - scalbility
+    - availability
+    - micro-services
+    - serverless. 
+
+
+namespaces:
+    - mnt: "what can i see"
+    - pid: "who am i"
+    - net: "how to communicate"
+    - IPC: "sharing + permissions"
+    - uts: "what name is shown for me"
+    - cgroups: "how much mem + cores can i have"
+    
+    - user: "identity"
+    - time: "what is the time"
+
+namespace = what am i aware of.
+
+lsns:
+
+output:
+    -   ns: inode number - kernal tracks ns's with it. Shows global ns's.
+    -   nprocs - number of processes - filtered by ubuntu's capabilities.
+    -   PID - actual numbers
+    -   sh - a representitive command.
+
+
+sudo lsns:
+    - full view of the system. 
+    - udevd process has an isolated mnt namespace!
+
+explore the ubnutu processes:
+    ps -U ubuntu
+
+nsenter: 
+- we'll enter the namespace for 1361 and see the world through its eyes. 
+- only use namespaces it actually uses or error!!
+
+- nsenter -t <pid number> -m -u -i -n -p /bin/bash - showed all processes as in gloabl ns's.
+
+To enter a isolated ns lets make one with unshare:
+
+unshare:
+
+nesting - allowed but be aware of permissions. 
+
+--pid: isolating the PID ns
+--fork duplicate the command so we have a process running in the pid tree. 
+
+is isolation worth it:
+    without:
+        - every process shares 1 filesystem/pid/network
+        - any bug or breach affects all.
+        - cant constrain cpu/mem usage.
+        - lose repreoducability. 
+    with:
+        - each service believes its alone.
+        - resources limited (reduces noisy affect)
+        - package the env run it anywhere.
+
+ns + docker process will stop if no long running process lie within.
+
+better example: 
+
+apt install debootstrap
+debootstrap --variant=minbase noble /rootfs http://archive.ubuntu.com/ubuntu/
+
+chroot (change root)
+
+unshare --mount --pid --net --ipc --uts --fork --root=rootfs --mount-proc /bin/bash
+
+good series of videos on youtube by Datadog:
+https://www.youtube.com/watch?v=BwI89OnYm-4
