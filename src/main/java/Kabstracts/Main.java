@@ -2,7 +2,8 @@ package Kabstracts;
 
 public class Main {
     public static void main(String[] args) {
-        
+        DataProcess dp = new JsonProcess();
+        dp.process();
     }
 }
 
