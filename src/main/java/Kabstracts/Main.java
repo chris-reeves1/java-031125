@@ -2,8 +2,8 @@ package Kabstracts;
 
 public class Main {
     public static void main(String[] args) {
-        DataProcess dp = new JsonProcess();
-        dp.process();
+        DataProcess jp = new JsonProcess();
+        jp.process();
     }
 }
 
@@ -16,38 +16,29 @@ abstract class DataProcess{
         saveData();
         logOutcome();
     }
-
     public void statusCheck(){
         System.out.println("file found and reader ready...");
     }
-
     public void logOutcome(){
         System.out.println("Outcome logged...");
     }
-
     abstract void readData();
     abstract void transformData();
     abstract void saveData();
-
 }
-
 class JsonProcess extends DataProcess{
-
     @Override
     void readData() {
         System.out.println("data read...");
     }
-
     @Override
     void transformData() {
         System.out.println("data transformed...");
     }
-
     @Override
     void saveData() {
       System.out.println("data saved...");
-    }
-    
+    }    
 }
 
 
