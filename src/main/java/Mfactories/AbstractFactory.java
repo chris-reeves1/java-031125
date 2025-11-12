@@ -4,6 +4,7 @@ public class AbstractFactory {
     public static void main(String[] args) {
         MealService service = new MealService(new JapaneseMealFactory());
         service.full();
+        Runnable r = () -> {};
     }
 }
 
@@ -51,4 +52,5 @@ class MealService{
         factory.createDrink().serve();
         factory.createDessert().serve();
     }
+
 }
