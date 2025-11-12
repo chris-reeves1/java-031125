@@ -1,3 +1,9 @@
+//scalability (0-3) - 1
+//maintainability (0-3) - 1
+//efficiancy (0-3) - 1
+
+
+
 package Mfactories;
 
 public class SimpleFactory {

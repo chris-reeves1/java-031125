@@ -1,3 +1,8 @@
+// scalability: 2
+// maintainability: 2
+// efficiancy: 2
+
+
 package Mfactories;
 
 public class FactoryMethod {

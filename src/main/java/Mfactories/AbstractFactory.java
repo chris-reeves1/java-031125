@@ -1,3 +1,7 @@
+// scalability: 2.5
+// maintainability: 2.5
+// efficiancy: 2
+
 package Mfactories;
 
 public class AbstractFactory {
