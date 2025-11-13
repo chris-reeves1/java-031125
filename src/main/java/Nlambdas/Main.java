@@ -22,6 +22,9 @@ public class Main {
             .map(Person::getAge)
             .forEach(System.out::println);
 
+            //STRETCH GOAL:
+            // - implement an Optional
+
     }
 }
 
