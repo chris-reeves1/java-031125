@@ -83,3 +83,88 @@ unshare --mount --pid --net --ipc --uts --fork --root=rootfs --mount-proc /bin/b
 
 good series of videos on youtube by Datadog:
 https://www.youtube.com/watch?v=BwI89OnYm-4
+
+
+
+-----------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
+
+
+
+1) install docker
+
+    curl https://get.docker.com | sudo bash
+
+then optionally:
+
+    sudo usermod -aG docker ubuntu
+
+Check its working ok:
+    docker run --rm hello-world
+
+2) image name construction
+
+    [HOST]/[USER]/[NAME]:[TAG]
+
+HOST: defaults to dockerhub.io (alternatives cloud registry, nexus, private server)
+USER: unofficial users need their username in the image name. Otherwise can be empty.
+NAME: just a name. 
+TAG: any metadata tag: v10.10.11, python/java, os, - if empty defaults to "latest". 
+
+3) image commands
+    - docker images                  - see downloaded images
+    - docker rmi <image-name>          - delete the image
+    - docker rmi -f $(docker images)    - delete all images
+    - docker tag <old> <new>      - rename image to tag username then push to registry. 
+    - docker push <name>        -- push to registry command
+    - docker search <name>        - searches dockerhub
+    - docker pull <name>        - manually pull an image from dockerhub. 
+
+4) run a container
+
+    docker run -d -p 80:80 --name nginxwebserver nginx
+
+    -d     --detatched mode  - doesnt tka eover our temrinal
+    -p     --publish - for publiushing ports. 
+            first number is host port and can be any open, free port.
+            second is app port and determined by the process/app running. 
+    --name     - names the actual container (optional)
+    last arg = the image name to use.
+    -e    -- pass through env vars
+    --network  --attach to a specific network
+    -v    - mounts for persistant data storage. 
+
+
+    docker ps    - shows all running containers
+    docker ps -a   - show all container running or stopped. 
+    docker rm -f $(docker ps -aq) -- delete all containers 
+    docker exec -it <name> bash - enter the container. 
+
+    docker stop <name>
+    docker start <name>
+    docker rename <old> <new>
+
+    docker logs <name>
+    docker inspect <name>
+
+6) build a custom image
+
+    docker build -t name . 
+
+    -t   -- name tag
+    .    -- build context - points to the dockerfile. 
+
+inside the Dockerfile:
+    FROM - base layer (always an image -- usually official)
+    WORKDIR
+    COPY - copies files to a location in the container. 
+    RUN - run linux commands in the container. 
+    ENV
+    EXPOSE
+    CMD
+    ENTRYPOINT
+    VOLUME
+    USER
+    ARG
+    HEALTHCHECK
+    LABEL
