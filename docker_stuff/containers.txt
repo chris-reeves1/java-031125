@@ -1,95 +1,39 @@
-Containers intro:
+Linux namespaces + containers:
+------------------------------
 
-- A container is a process. 
+A container is a process. 
 
-- it's like a virtual machine - os/ephemeral/install+config like a vm. 
+its like a "light-weight virtual machine", "box that contains your code + dependancies." 
 
-- description:
-    - self-contained apps/dependancies
-    - independence from OS?????? sudo always has visabilty and control. 
-    - isolation - processes/
-    - works on any env/os
-    - scalbility
-    - availability
-    - micro-services
-    - serverless. 
-
+description:
+    - runs on any o/s
+    - some containers are described in images
+    - isolation - filesystem, processes, system resources, users, permission, networks   
 
 namespaces:
-    - mnt: "what can i see"
-    - pid: "who am i"
-    - net: "how to communicate"
-    - IPC: "sharing + permissions"
-    - uts: "what name is shown for me"
-    - cgroups: "how much mem + cores can i have"
-    
-    - user: "identity"
-    - time: "what is the time"
+mnt: "what can i see"
+pid: "what process number do i have"
+IPC: "sharing + permissions"
+UTS: "whats my name"
+net: "how to communicate"
+cgroups: "memory + cores available"
 
-namespace = what am i aware of.
+user: "identy"
+time: "what is the time"
 
-lsns:
+lsns: - show namespaces
+ps: show processes
 
-output:
-    -   ns: inode number - kernal tracks ns's with it. Shows global ns's.
-    -   nprocs - number of processes - filtered by ubuntu's capabilities.
-    -   PID - actual numbers
-    -   sh - a representitive command.
+nsenter: enter a custom namespace
 
+unshare: 
+sudo unshare --pid --fork --mount-proc /bin/bash
 
-sudo lsns:
-    - full view of the system. 
-    - udevd process has an isolated mnt namespace!
-
-explore the ubnutu processes:
-    ps -U ubuntu
-
-nsenter: 
-- we'll enter the namespace for 1361 and see the world through its eyes. 
-- only use namespaces it actually uses or error!!
-
-- nsenter -t <pid number> -m -u -i -n -p /bin/bash - showed all processes as in gloabl ns's.
-
-To enter a isolated ns lets make one with unshare:
-
-unshare:
-
-nesting - allowed but be aware of permissions. 
-
---pid: isolating the PID ns
---fork duplicate the command so we have a process running in the pid tree. 
-
-is isolation worth it:
-    without:
-        - every process shares 1 filesystem/pid/network
-        - any bug or breach affects all.
-        - cant constrain cpu/mem usage.
-        - lose repreoducability. 
-    with:
-        - each service believes its alone.
-        - resources limited (reduces noisy affect)
-        - package the env run it anywhere.
-
-ns + docker process will stop if no long running process lie within.
-
-better example: 
-
-apt install debootstrap
-debootstrap --variant=minbase noble /rootfs http://archive.ubuntu.com/ubuntu/
-
-chroot (change root)
-
-unshare --mount --pid --net --ipc --uts --fork --root=rootfs --mount-proc /bin/bash
-
-good series of videos on youtube by Datadog:
-https://www.youtube.com/watch?v=BwI89OnYm-4
+sudo debootstrap --variant=minbase noble /rootfs http://archive.ubuntu.com/ubuntu
 
 
-
------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------
-
-
+-------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------
 
 1) install docker
 
@@ -156,15 +100,17 @@ TAG: any metadata tag: v10.10.11, python/java, os, - if empty defaults to "lates
 
 inside the Dockerfile:
     FROM - base layer (always an image -- usually official)
-    WORKDIR
-    COPY - copies files to a location in the container. 
-    RUN - run linux commands in the container. 
-    ENV
-    EXPOSE
-    CMD
-    ENTRYPOINT
-    VOLUME
-    USER
-    ARG
-    HEALTHCHECK
-    LABEL
+    WORKDIR (optional) - sets the working directory.subsequenbt copy/run commnands tagret it. 
+    COPY - (optional) copies files to a location in the container. copy . . 
+    RUN - (optional) run linux commands in the container. 128 commands + daisy-chaining.
+     install reqs for example RUN pip install -r requirements.txt 
+    ENV - (optional) environemtn vars ENV VAR="value"
+    EXPOSE - (optional) what port does the app run on. 5500 - conventional + for easy viewing. 
+    CMD - commands to run on start up..... can be overridden in run command
+    ENTRYPOINT - command to run on start up - not changable.
+        eg ENTRYPOINT ["python", "app.py"]
+    ARG - optional - vars - pass through differnt versions/authors
+    LABEL - (optional)metadata - author, data, version, comments... 
+    VOLUME - (optional) persistant storage. 
+    USER - (optional) replace root!!
+    HEALTHCHECK - (optional) 
