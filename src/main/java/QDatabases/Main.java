@@ -47,6 +47,41 @@ URL = "jdbc:h2:mem:testdb"
 
 connection:vendor:options/name:options
 
+batches
+transactions
+
+Exercises:
+
+Exercise 1: Insert and Retrieve
+Task: Write a method insertAndPrint that:
+    Inserts a new customer with a given name and city.
+    Immediately retrieves and prints the inserted customer using selectById.
+    Goal: Practice insertCustomer, selectById, and understand auto-generated keys.
+
+Exercise 2: Update Multiple Customers in a Transaction
+Task: Write a method updateCitiesInTransaction that:
+    Finds all customers in "Paris" or... "something"
+    Updates their city to "Amsterdam" within a transaction.
+    If any update fails, rollback the entire operation.
+    Goal: Practice selectByCity, updateCity, and transaction rollback.
+
+Exercise 3: Count by City
+Task: Write a method countByCity(Connection conn, String city) that:
+    Returns the number of customers in the given city.
+    Goal: Practice writing a simple SELECT COUNT(*) ... WHERE city = ?.
+
+Exercise 4: Batch Insert with Custom Names
+Task: Write a method batchInsertCustomNames that:
+    Accepts a list of names and a city.
+    Inserts all names into the customers table with the same city using batch insert.
+    Goal: Practice addBatch, executeBatch, and parameter binding.
+
+Exercise 5: Delete All in a City
+Task: Write a method deleteByCity(Connection conn, String city) that:
+    Deletes all customers from the specified city.
+    Returns the number of rows deleted.
+    Goal: Practice DELETE FROM ... WHERE and parameterized statements.
+
 
 
 

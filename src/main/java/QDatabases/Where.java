@@ -25,32 +25,6 @@ public static void main(String[] args) throws Exception {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 static void seed(Connection conn) throws SQLException{
     createTable(conn);
     insertCustomer(conn, "a" , "London");
@@ -70,6 +44,7 @@ static void createTable(Connection conn) throws SQLException{
         }
     }
 
+    
 
  static List<Customer> selectByCity(Connection conn, String city) throws SQLException {
         String sql = "SELECT id, name, city FROM customers WHERE city = ? ORDER BY id";
