@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import com.google.gson.Gson;
+//import com.google.gson.Gson;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -45,29 +45,29 @@ public class Main {
     //     System.out.println(line);
     //    }
 
-    //    Files.write(Paths.get("example.txt"), "write to file pls".getBytes());
+    // //    Files.write(Paths.get("example.txt"), "write to file pls".getBytes());
 
-    //    Path p = Path.of("example.txt");
-    //    Files.writeString(p, "will this work");
+    // //    Path p = Path.of("example.txt");
+    // //    Files.writeString(p, "will this work");
        
 
-    Person person = new Person(30, "c");
+    // Person person = new Person(30, "c");
 
-    // should only have 1 json object - reuse it rather than recreate.
-    Gson gson = new Gson();
+    // // should only have 1 json object - reuse it rather than recreate.
+    // //Gson gson = new Gson();
 
-    //serialisation so json can write it:
-    String json = gson.toJson(person);
-    System.out.println(json); // looks like json data...
+    // //serialisation so json can write it:
+    // String json = gson.toJson(person);
+    // System.out.println(json); // looks like json data...
 
-    //write to a .json file
-    Path out = Path.of("person.json");
-    Files.writeString(out, json);
+    // //write to a .json file
+    // Path out = Path.of("person.json");
+    // Files.writeString(out, json);
 
-    // read and make back into a Person object:
-    String read = Files.readString(out);
-    Person person1 = gson.fromJson(read, Person.class);
-    System.out.println(person1.getAge() + person1.getName());
+    // // read and make back into a Person object:
+    // String read = Files.readString(out);
+    // Person person1 = gson.fromJson(read, Person.class);
+    // System.out.println(person1.getAge() + person1.getName());
 
 
 

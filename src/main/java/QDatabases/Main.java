@@ -84,8 +84,66 @@ Task: Write a method deleteByCity(Connection conn, String city) that:
 
 
 
+solutions:
+
+static void insertAndPrint(Connection conn, String name, String city) throws SQLException {
+    long id = insertCustomer(conn, name, city);
+    String customer = selectById(conn, id);
+    System.out.println("Inserted and retrieved: " + customer);
+}
+
+static void updateCitiesInTransaction(Connection conn, String fromCity, String toCity) throws SQLException {
+    boolean old = conn.getAutoCommit();
+    conn.setAutoCommit(false);
+    try {
+        List<Customer> customers = selectByCity(conn, fromCity);
+        for (Customer c : customers) {
+            updateCity(conn, c.id, toCity);
+        }
+        conn.commit();
+        System.out.println("Updated " + customers.size() + " customers from " + fromCity + " to " + toCity);
+    } catch (SQLException e) {
+        System.err.println("ROLLBACK: " + e.getMessage());
+        conn.rollback();
+    } finally {
+        conn.setAutoCommit(old);
+    }
+}
+
+static long countByCity(Connection conn, String city) throws SQLException {
+    String sql = "SELECT COUNT(*) FROM customers WHERE city = ?";
+    try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setString(1, city);
+        try (ResultSet rs = ps.executeQuery()) {
+            rs.next();
+            return rs.getLong(1);
+        }
+    }
+}
+
+static void batchInsertCustomNames(Connection conn, List<String> names, String city) throws SQLException {
+    String sql = "INSERT INTO customers(name, city) VALUES(?, ?)";
+    try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        for (String name : names) {
+            ps.setString(1, name);
+            ps.setString(2, city);
+            ps.addBatch();
+        }
+        int[] res = ps.executeBatch();
+        System.out.println("Inserted " + res.length + " custom-named customers into " + city);
+    }
+}
 
 
+static int deleteByCity(Connection conn, String city) throws SQLException {
+    String sql = "DELETE FROM customers WHERE city = ?";
+    try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setString(1, city);
+        int deleted = ps.executeUpdate();
+        System.out.println("Deleted " + deleted + " customers from " + city);
+        return deleted;
+    }
+}
 
 
 */
